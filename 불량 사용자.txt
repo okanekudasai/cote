@@ -1,0 +1,27 @@
+def solution(u, b):
+    com = []
+    for i in b:
+        temp = []
+        for (idx, j) in enumerate(u):
+            if len(i) == len(j) and all(i[k] == j[k] for k in range(len(i)) if i[k] != "*"):
+                temp += [idx]
+        if (temp): com += [temp]
+    # print(com)
+    arr = [0 for i in range(len(com))]
+    visit = [False for i in range(len(u))]
+    answer = []
+    def picking(n):
+        if n >= len(arr):
+            answer.append(tuple(sorted(arr)))
+            # print(tuple(sorted(arr)))
+            return
+        for i in com[n]:
+            if visit[i] == True: continue
+            arr[n] = i
+            visit[i] = True
+            picking(n + 1)
+            visit[i] = False
+            arr[n] = 0
+    picking(0)
+    # print(len(set(answer)))
+    return len(set(answer))
